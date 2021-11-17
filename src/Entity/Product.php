@@ -165,7 +165,7 @@ class Product
     public function setImageFile(File $image = Null)
     {
         $this->imageFile = $image;
-
+//test
         // VERY IMPORTANT:
         // It is required that at least one field changes if you are using Doctrine,
         // otherwise the event listeners won't be called and the file is lost
