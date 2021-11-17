@@ -17,11 +17,17 @@ class DashboardController extends AbstractDashboardController
     /**
      * @Route("/{_locale}/admin", name="admin")
      */
+    public function index1(): Response
+    {
+        return parent::index();
+    }
+  /**
+     * @Route("/admin", name="admin")
+     */
     public function index(): Response
     {
         return parent::index();
     }
-
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
