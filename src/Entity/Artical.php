@@ -7,37 +7,54 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticalRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ArticalRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ * collectionOperations={
+ *           "post",
+ *          "get"={"normalization_context"={"groups"="Artical_read"}},
+ *     },
+ *   normalizationContext={"groups"={"get"}},
+ *     itemOperations={
+ *         "put",
+ *          "patch",
+ *           "delete",
+ *         "get"={
+ *             "normalization_context"={"groups"={"Artical_read_details"}}
+ *         }
+ *     })
  */
 class Artical
 { 
 use Timestampable;
-        
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+use ResourceId;
+    // /**
+    //  * @ORM\Id
+    //  * @ORM\GeneratedValue
+    //  * @ORM\Column(type="integer")
+    //  *  @Groups({"Artical_read_details","Artical_read"})
+    //  */
+    // private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_details","Artical_read_details"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articals")
+     * @Groups({"Artical_read_details"})
      * 
      */
     private $Author;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    // public function getId(): ?int
+    // {
+    //     return $this->id;
+    // }
 
     public function getName(): ?string
     {

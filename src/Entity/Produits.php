@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ProduitsRepository;
@@ -14,13 +14,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  */
 class Produits
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
+use ResourceId;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -36,10 +31,7 @@ class Produits
      */
     private $categories;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  
 
     public function getNomp(): ?string
     {

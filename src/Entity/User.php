@@ -1,30 +1,40 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource(formats={"json"})
+ * @ApiResource(formats={"json"},
+ * collectionOperations={
+ *           "post",
+ *          "get"={"normalization_context"={"groups"="read"}},
+ *     },
+ *   normalizationContext={"groups"={"get"}},
+ *     itemOperations={
+ *         "put",
+ *          "patch",
+ *           "delete",
+ *         "get"={
+ *             "normalization_context"={"groups"={"read_details"}}
+ *         }
+ *     })
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+  use ResourceId;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"read_details","read","Artical_read_details"})
      */
     private $email;
 
@@ -42,6 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Artical::class, mappedBy="Author")
+     * @Groups({"read_details"})
      */
     private $articals;
 
@@ -51,10 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->createdAt=new \DateTimeImmutable();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+ 
 
     public function getEmail(): ?string
     {
