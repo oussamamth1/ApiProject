@@ -2,15 +2,18 @@
 declare(strict_types=1);
 namespace App\Entity;
 
-use App\Repository\ProduitsRepository;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Repository\ProduitsRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ORM\Entity(repositoryClass=ProduitsRepository::class)
  * @ApiResource(formats={"json"})
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "nomp": "exact", "description": "partial"})
+ * @ApiFilter(DateFilter::class, properties={"cratedAt","updatedAt"})
  */
 class Produits
 {
@@ -30,6 +33,18 @@ use ResourceId;
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="produits")
      */
     private $categories;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $cratedAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updatedAt;
 
   
 
@@ -68,4 +83,28 @@ use ResourceId;
 
         return $this;
     }
+
+    public function getCratedAt(): ?\DateTimeInterface
+    {
+        return $this->cratedAt;
+    }
+
+    public function setCratedAt(\DateTimeInterface $cratedAt): self
+    {
+        $this->cratedAt = $cratedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    // public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    // {
+    //     $this->updatedAt = $updatedAt;
+
+    //     return $this;
+    // }
 }

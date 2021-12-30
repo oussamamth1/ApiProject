@@ -43,7 +43,7 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
         articals:
             pattern:   ^/api/articals    
-            methods: [POST,PUT,DELETE,PATCH]
+            methods: [POST,DELETE,PATCH]
             stateless: true
             guard:
                 authenticators:
@@ -77,7 +77,7 @@ security:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY,methods: [PUT,DELETE,PATCH] }
         - { path: ^/api/produits, roles: IS_AUTHENTICATED_FULLY,methods: [POST,PUT,DELETE,PATCH] }
-        - { path: ^/api/articals, roles: IS_AUTHENTICATED_FULLY,methods: [POST,PUT,DELETE,PATCH] }
+        - { path: ^/api/articals, roles: IS_AUTHENTICATED_FULLY,methods: [POST,PUT,DELETE] }
 when@test:
     security:
         password_hashers:

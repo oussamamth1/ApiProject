@@ -4,9 +4,11 @@ namespace App\Entity;
 
 
 
+use App\Entity\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticalRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\ArticalsUpdatedAtController;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -21,9 +23,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *         "put",
  *          "patch",
  *           "delete",
+ *  "put_updateAt"={
+ *         "method"="PUT",
+ *         "path"="/articals/{id}/updated_at",
+ *         "controller"=ArticalsUpdatedAtController::class,
+ * "normalization_context"={"groups"={"publication"}} ,
+ *         
+ *     },
  *         "get"={
  *             "normalization_context"={"groups"={"Artical_read_details"}}
- *         }
+ *         },
+ 
  *     })
  */
 class Artical
@@ -84,4 +94,5 @@ use ResourceId;
 
         return $this;
     }
+    
 }
