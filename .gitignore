@@ -19,7 +19,4 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-###> lexik/jwt-authentication-bundle ###
-
-###< lexik/jwt-authentication-bundle ###
 
