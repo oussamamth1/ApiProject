@@ -80,8 +80,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY,methods: [PUT,DELETE,PATCH] }
         - { path: ^/api/produits, roles: IS_AUTHENTICATED_FULLY,methods: [PUT,DELETE,PATCH] }
         - { path: ^/api/articals, roles: IS_AUTHENTICATED_FULLY,methods: [POST,PUT,DELETE] }
